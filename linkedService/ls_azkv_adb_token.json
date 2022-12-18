@@ -1,0 +1,10 @@
+{
+	"name": "ls_azkv_adb_token",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://azkv-sqldb.vault.azure.net/"
+		}
+	}
+}
