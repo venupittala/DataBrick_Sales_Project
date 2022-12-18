@@ -1,0 +1,9 @@
+{
+	"name": "adfpyspark1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ee02af38-1095-4629-b455-fa60291fdd43",
+		"tenantId": "9c1f85fd-ab99-4ba0-80e0-8a278e7fa790"
+	}
+}
