@@ -55,7 +55,7 @@
 									"referenceName": "pl_sales_history_child_data",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true,
+								"waitOnCompletion": false,
 								"parameters": {
 									"job_id": {
 										"value": "@item().job_id",
