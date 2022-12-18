@@ -1,0 +1,146 @@
+{
+	"name": "pl_sales_history_child_data",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetMetadataadlsgen2",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_adlsgen2_saleshistory_getmetdata",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder_name": {
+								"value": "@pipeline().parameters.source_folder_name",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"childItems",
+						"exists",
+						"itemName",
+						"lastModified",
+						"itemType",
+						"exists"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "FilterFiles",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "GetMetadataadlsgen2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetMetadataadlsgen2').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().type,'File')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FilterFiles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FilterFiles').output",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"job_id": {
+				"type": "string"
+			},
+			"job_name": {
+				"type": "string"
+			},
+			"pyspark_schema": {
+				"type": "string"
+			},
+			"landing_zone_file_path": {
+				"type": "string"
+			},
+			"landing_zone_folder_name": {
+				"type": "string"
+			},
+			"landing_zone_file_name": {
+				"type": "string"
+			},
+			"landing_zone_file_type": {
+				"type": "string"
+			},
+			"staging_zone_database_name": {
+				"type": "string"
+			},
+			"staging_zone_table_name": {
+				"type": "string"
+			},
+			"staging_zone_table_pk_column": {
+				"type": "string"
+			},
+			"curation_zone_database_name": {
+				"type": "string"
+			},
+			"curation_zone_table_name": {
+				"type": "string"
+			},
+			"curation_zone_table_pk_column": {
+				"type": "string"
+			},
+			"dw_zone_database_name": {
+				"type": "string"
+			},
+			"dw_zone_table_name": {
+				"type": "string"
+			},
+			"dw_zone_table_pk_column": {
+				"type": "string"
+			},
+			"source_folder_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Sales_history_data"
+		},
+		"annotations": []
+	}
+}
