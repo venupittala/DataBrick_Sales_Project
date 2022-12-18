@@ -17,6 +17,9 @@
 		"ls_adlsgen2_historydat_properties_typeProperties_url": {
 			"value": "https://pyadlsgen2storage.dfs.core.windows.net/"
 		},
+		"ls_adb_salesdata_properties_typeProperties_existingClusterId": {
+			"value": "1218-022928-csona1j1"
+		},
 		"containerUri": {
 			"value": ""
 		},

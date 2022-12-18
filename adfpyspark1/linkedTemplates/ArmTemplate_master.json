@@ -23,6 +23,10 @@
 			"type": "string",
 			"defaultValue": "https://pyadlsgen2storage.dfs.core.windows.net/"
 		},
+		"ls_adb_salesdata_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1218-022928-csona1j1"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -61,6 +65,9 @@
 					},
 					"ls_adlsgen2_historydat_properties_typeProperties_url": {
 						"value": "[parameters('ls_adlsgen2_historydat_properties_typeProperties_url')]"
+					},
+					"ls_adb_salesdata_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ls_adb_salesdata_properties_typeProperties_existingClusterId')]"
 					}
 				}
 			},

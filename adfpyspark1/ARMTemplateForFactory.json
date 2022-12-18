@@ -22,6 +22,10 @@
 		"ls_adlsgen2_historydat_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://pyadlsgen2storage.dfs.core.windows.net/"
+		},
+		"ls_adb_salesdata_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1218-022928-csona1j1"
 		}
 	},
 	"variables": {
@@ -156,6 +160,10 @@
 											},
 											"source_folder_name": {
 												"value": "@item().source_folder_name",
+												"type": "Expression"
+											},
+											"table_type": {
+												"value": "@item().table_type",
 												"type": "Expression"
 											}
 										}
@@ -566,6 +574,159 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "landingtostaging",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "ForEach1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/Pyspark_Project_Dynamic/NB_sales_landing_staging",
+							"baseParameters": {
+								"job_name": {
+									"value": "@pipeline().parameters.job_name",
+									"type": "Expression"
+								},
+								"job_id": {
+									"value": "@pipeline().parameters.job_id",
+									"type": "Expression"
+								},
+								"pyspark_schema": {
+									"value": "@pipeline().parameters.pyspark_schema",
+									"type": "Expression"
+								},
+								" landing_zone_file_path": {
+									"value": "@pipeline().parameters.landing_zone_file_path",
+									"type": "Expression"
+								},
+								"landing_zone_folder_name": {
+									"value": "@pipeline().parameters.landing_zone_folder_name",
+									"type": "Expression"
+								},
+								"landing_zone_file_name": {
+									"value": "@pipeline().parameters.landing_zone_file_name",
+									"type": "Expression"
+								},
+								"landing_zone_file_type": {
+									"value": "@pipeline().parameters.landing_zone_file_type",
+									"type": "Expression"
+								},
+								"staging_zone_database_name": {
+									"value": "@pipeline().parameters.staging_zone_database_name",
+									"type": "Expression"
+								},
+								"staging_zone_table_name": {
+									"value": "@pipeline().parameters.staging_zone_table_name",
+									"type": "Expression"
+								},
+								"staging_zone_table_pk_column": {
+									"value": "@pipeline().parameters.staging_zone_table_pk_column",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_adb_salesdata",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "stagingToCuration",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "landingtostaging",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/Pyspark_Project_Dynamic/NB_sales_staging_curated",
+							"baseParameters": {
+								"job_name": {
+									"value": "@pipeline().parameters.job_name",
+									"type": "Expression"
+								},
+								"job_id": {
+									"value": "@pipeline().parameters.job_id",
+									"type": "Expression"
+								},
+								"pyspark_schema": {
+									"value": "@pipeline().parameters.pyspark_schema",
+									"type": "Expression"
+								},
+								"curation_zone_database_name": {
+									"value": "@pipeline().parameters.curation_zone_database_name",
+									"type": "Expression"
+								},
+								"curation_zone_table_name": {
+									"value": "@pipeline().parameters.curation_zone_table_name",
+									"type": "Expression"
+								},
+								"curation_zone_table_pk_column": {
+									"value": "@pipeline().parameters.curation_zone_table_pk_column",
+									"type": "Expression"
+								},
+								"staging_zone_database_name": {
+									"value": "@pipeline().parameters.staging_zone_database_name",
+									"type": "Expression"
+								},
+								"staging_zone_table_name": {
+									"value": "@pipeline().parameters.staging_zone_table_name",
+									"type": "Expression"
+								},
+								"staging_zone_table_pk_column": {
+									"value": "@pipeline().parameters.staging_zone_table_pk_column",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_adb_salesdata",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "If Condition1",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "stagingToCuration",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(pipeline().parameters.table_type, 'dim' )",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
@@ -623,6 +784,9 @@
 					},
 					"source_folder_name": {
 						"type": "string"
+					},
+					"table_type": {
+						"type": "string"
 					}
 				},
 				"folder": {
@@ -632,6 +796,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_adlsgen2_saleshistory_getmetdata')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_adb_salesdata')]",
 				"[concat(variables('factoryId'), '/datasets/ds_adlsgen2_file_binarycopy')]",
 				"[concat(variables('factoryId'), '/datasets/ds_blob_binary_target_sales_history')]"
 			]
@@ -784,6 +949,30 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_blob_sales_data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_adb_salesdata')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-196806687510649.9.azuredatabricks.net",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_azkv_adb_token",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "adb-token"
+					},
+					"existingClusterId": "[parameters('ls_adb_salesdata_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_azkv_adb_token')]"
 			]
 		}
 	]
