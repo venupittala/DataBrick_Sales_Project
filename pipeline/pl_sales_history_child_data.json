@@ -170,7 +170,49 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Shared/Pyspark_Project_Dynamic/NB_sales_landing_staging"
+					"notebookPath": "/Shared/Pyspark_Project_Dynamic/NB_sales_landing_staging",
+					"baseParameters": {
+						"job_name": {
+							"value": "@pipeline().parameters.job_name",
+							"type": "Expression"
+						},
+						"job_id": {
+							"value": "@pipeline().parameters.job_id",
+							"type": "Expression"
+						},
+						"pyspark_schema": {
+							"value": "@pipeline().parameters.pyspark_schema",
+							"type": "Expression"
+						},
+						" landing_zone_file_path": {
+							"value": "@pipeline().parameters.landing_zone_file_path",
+							"type": "Expression"
+						},
+						"landing_zone_folder_name": {
+							"value": "@pipeline().parameters.landing_zone_folder_name",
+							"type": "Expression"
+						},
+						"landing_zone_file_name": {
+							"value": "@pipeline().parameters.landing_zone_file_name",
+							"type": "Expression"
+						},
+						"landing_zone_file_type": {
+							"value": "@pipeline().parameters.landing_zone_file_type",
+							"type": "Expression"
+						},
+						"staging_zone_database_name": {
+							"value": "@pipeline().parameters.staging_zone_database_name",
+							"type": "Expression"
+						},
+						"staging_zone_table_name": {
+							"value": "@pipeline().parameters.staging_zone_table_name",
+							"type": "Expression"
+						},
+						"staging_zone_table_pk_column": {
+							"value": "@pipeline().parameters.staging_zone_table_pk_column",
+							"type": "Expression"
+						}
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_adb_salesdata",
