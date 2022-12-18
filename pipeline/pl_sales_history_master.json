@@ -38,9 +38,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('JobDetails').output.value",
+						"value": "@activity('JobDetails').output.firstRow",
 						"type": "Expression"
 					},
+					"isSequential": false,
 					"activities": [
 						{
 							"name": "pl_sales_history_master",
