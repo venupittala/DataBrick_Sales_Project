@@ -1,0 +1,36 @@
+{
+	"name": "ds_blob_binary_target_sales_history",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_blob_sales_data",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"folder_name": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Sales_History_data"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('target/',dataset().file_name)",
+					"type": "Expression"
+				},
+				"container": "target"
+			}
+		}
+	}
+}
