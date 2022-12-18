@@ -64,25 +64,6 @@
 						"type": "Expression"
 					}
 				}
-			},
-			{
-				"name": "ForEach",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "FilterFiles",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('FilterFiles').output",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"parameters": {
