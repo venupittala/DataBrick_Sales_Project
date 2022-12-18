@@ -40,7 +40,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('JobDetails').output.firstRow",
+						"value": "@activity('JobDetails').output.value",
 						"type": "Expression"
 					},
 					"isSequential": false,
