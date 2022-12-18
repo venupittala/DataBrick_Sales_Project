@@ -124,6 +124,10 @@
 									"source_folder_name": {
 										"value": "@item().source_folder_name",
 										"type": "Expression"
+									},
+									"table_type": {
+										"value": "@item().table_type",
+										"type": "Expression"
 									}
 								}
 							}
