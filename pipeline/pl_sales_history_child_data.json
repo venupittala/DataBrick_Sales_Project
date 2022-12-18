@@ -300,7 +300,67 @@
 					"expression": {
 						"value": "@equals(pipeline().parameters.table_type, 'dim' )",
 						"type": "Expression"
-					}
+					},
+					"ifTrueActivities": [
+						{
+							"name": "CurationToDwhDim",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Shared/Pyspark_Project_Dynamic/NB_sales_curation_dwh",
+								"baseParameters": {
+									"job_name": {
+										"value": "@pipeline().parameters.job_name",
+										"type": "Expression"
+									},
+									"job_id": {
+										"value": "@pipeline().parameters.job_id",
+										"type": "Expression"
+									},
+									"pyspark_schema": {
+										"value": "@pipeline().parameters.pyspark_schema",
+										"type": "Expression"
+									},
+									"curation_zone_database_name": {
+										"value": "@pipeline().parameters.curation_zone_database_name",
+										"type": "Expression"
+									},
+									"curation_zone_table_name": {
+										"value": "@pipeline().parameters.curation_zone_table_name",
+										"type": "Expression"
+									},
+									"curation_zone_table_pk_column": {
+										"value": "@pipeline().parameters.curation_zone_table_pk_column",
+										"type": "Expression"
+									},
+									"dw_zone_database_name": {
+										"value": "@pipeline().parameters.dw_zone_database_name",
+										"type": "Expression"
+									},
+									"dw_zone_table_name": {
+										"value": "@pipeline().parameters.dw_zone_table_name",
+										"type": "Expression"
+									},
+									"dw_zone_table_pk_column": {
+										"value": "@pipeline().parameters.dw_zone_table_pk_column",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ls_adb_salesdata",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
 				}
 			}
 		],
