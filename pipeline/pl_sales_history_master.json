@@ -22,7 +22,8 @@
 					"dataset": {
 						"referenceName": "ds_databricks_delta_job_details",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
@@ -39,7 +40,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('JobDetails').output.value",
+						"value": "@activity('JobDetails').output.firstRow",
 						"type": "Expression"
 					},
 					"isSequential": false,
