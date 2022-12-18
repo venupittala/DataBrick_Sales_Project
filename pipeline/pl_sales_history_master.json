@@ -16,7 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureDatabricksDeltaLakeSource"
+						"type": "AzureDatabricksDeltaLakeSource",
+						"query": "select * from jobs.JOB_LIST_DYNAMIC where  job_status=1 order by job_id"
 					},
 					"dataset": {
 						"referenceName": "ds_databricks_delta_job_details",
