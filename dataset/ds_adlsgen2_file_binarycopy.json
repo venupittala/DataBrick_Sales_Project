@@ -1,0 +1,36 @@
+{
+	"name": "ds_adlsgen2_file_binarycopy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adlsgen2_historydat",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"folder_name": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Sales_History_data"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder_name",
+					"type": "Expression"
+				},
+				"fileSystem": "source\\SH"
+			}
+		}
+	}
+}
