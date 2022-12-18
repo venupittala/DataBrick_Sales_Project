@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfpyspark1"
+		},
+		"ls_adlsgen2_historydat_accountKey": {
+			"value": ""
+		},
+		"ls_blob_sales_data_connectionString": {
+			"value": ""
+		},
+		"ls_azkv_adb_token_properties_typeProperties_baseUrl": {
+			"value": "https://azkv-sqldb.vault.azure.net/"
+		},
+		"ls_adlsgen2_historydat_properties_typeProperties_url": {
+			"value": "https://pyadlsgen2storage.dfs.core.windows.net/"
+		}
+	}
+}
