@@ -26,6 +26,70 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup1').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "pl_product_master_data",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pl_sales_child_load",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"id": {
+										"value": "@item().id",
+										"type": "Expression"
+									},
+									"job_name": {
+										"value": "@item().job_name",
+										"type": "Expression"
+									},
+									"stg_table": {
+										"value": "@item().stg_table",
+										"type": "Expression"
+									},
+									"target_table": {
+										"value": "@item().target_table",
+										"type": "Expression"
+									},
+									"proc_name": {
+										"value": "@item().proc_name",
+										"type": "Expression"
+									},
+									"source_folder": {
+										"value": "@item().source_folder",
+										"type": "Expression"
+									},
+									"folder_name": {
+										"value": "@item().folder_name",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"folder": {

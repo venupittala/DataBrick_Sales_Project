@@ -1,0 +1,73 @@
+{
+	"name": "pl_sales_child_load",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get_ Metadata_BlobStorage",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_adlsgen2_saleshistory_getmetdata",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder_name": {
+								"value": "@pipeline().parameters.folder_name",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"lastModified",
+						"itemType",
+						"itemName",
+						"exists",
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"id": {
+				"type": "string"
+			},
+			"job_name": {
+				"type": "string"
+			},
+			"stg_table": {
+				"type": "string"
+			},
+			"target_table": {
+				"type": "string"
+			},
+			"proc_name": {
+				"type": "string"
+			},
+			"source_folder": {
+				"type": "string"
+			},
+			"folder_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Product_Sales_Data"
+		},
+		"annotations": []
+	}
+}
