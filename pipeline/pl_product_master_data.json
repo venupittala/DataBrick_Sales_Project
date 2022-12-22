@@ -81,10 +81,6 @@
 									"source_folder": {
 										"value": "@item().source_folder",
 										"type": "Expression"
-									},
-									"folder_name": {
-										"value": "@item().folder_name",
-										"type": "Expression"
 									}
 								}
 							}
