@@ -1,0 +1,15 @@
+{
+	"name": "ls_AzureSqlDatabase",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=pysparksqlservername.database.windows.net;initial catalog=pysparkdatabase;user id=pyspark",
+			"alwaysEncryptedSettings": {
+				"alwaysEncryptedAkvAuthType": "ManagedIdentity"
+			},
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDIzQ0RFQzQwLTVBOEEtNDE1RS05QjM1LUFCMTg4RTI1QzRCNl9jMTkyMGRhOC1kMmY3LTQ3ZGMtOTA3Ny04OWUwN2E5MjM5NDIiDQp9"
+		}
+	}
+}
