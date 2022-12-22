@@ -1,0 +1,42 @@
+{
+	"name": "ds_AzureSqlTable_Job_table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "job_name",
+				"type": "varchar"
+			},
+			{
+				"name": "stg_table",
+				"type": "varchar"
+			},
+			{
+				"name": "target_table",
+				"type": "varchar"
+			},
+			{
+				"name": "proc_name",
+				"type": "varchar"
+			},
+			{
+				"name": "source_folder",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dynamic"
+		}
+	}
+}
